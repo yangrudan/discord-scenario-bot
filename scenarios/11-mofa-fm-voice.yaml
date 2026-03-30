@@ -1,0 +1,89 @@
+name: "mofa-fm Voice Management Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - wait_for_test_trigger:
+      tc_id: TC-FM-11-01
+      correlation_id: run-20260330-111
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_voice_list
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_voice_list
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-FM-11-02
+      correlation_id: run-20260330-112
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_voice_save
+        args:
+          voice_name: "test_custom_voice"
+          audio_url: "https://example.com/sample_audio.mp3"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_voice_save
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-FM-11-03
+      correlation_id: run-20260330-113
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_tts
+        args:
+          text: "Testing with a custom cloned voice."
+          voice: "test_custom_voice"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_tts
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-FM-11-04
+      correlation_id: run-20260330-114
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_voice_delete
+        args:
+          voice_name: "test_custom_voice"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_voice_delete
+        status: success
+      timeout: 30

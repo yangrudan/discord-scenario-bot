@@ -1,0 +1,111 @@
+name: "mofa-fm-api Auth API Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - wait_for_test_trigger:
+      tc_id: TC-API-21-01
+      correlation_id: run-20260330-211
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_login
+        args:
+          username: "test_user"
+          password: "test_password"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_login
+        status: success
+        payload_contains:
+          token: ""
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-21-02
+      correlation_id: run-20260330-212
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_get_user_info
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_get_user_info
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-21-03
+      correlation_id: run-20260330-213
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_become_creator
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_become_creator
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-21-04
+      correlation_id: run-20260330-214
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_podcast_create
+        args:
+          title: "Test Podcast Show"
+          description: "A test podcast created by automated test."
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_podcast_create
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-21-05
+      correlation_id: run-20260330-215
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_script_generate
+        args:
+          topic: "The Future of Artificial Intelligence"
+          language: "english"
+      timeout: 60
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_script_generate
+        status: success
+      timeout: 60

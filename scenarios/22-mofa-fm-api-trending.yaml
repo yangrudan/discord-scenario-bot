@@ -1,0 +1,131 @@
+name: "mofa-fm-api Trending API Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-01
+      correlation_id: run-20260330-221
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "bilibili"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-02
+      correlation_id: run-20260330-222
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "zhihu"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-03
+      correlation_id: run-20260330-223
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "weibo"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-04
+      correlation_id: run-20260330-224
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "github"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-05
+      correlation_id: run-20260330-225
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "weixin"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-22-06
+      correlation_id: run-20260330-226
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "douyin"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30

@@ -1,0 +1,113 @@
+name: "mofa-fm-api Public API Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - wait_for_test_trigger:
+      tc_id: TC-API-20-01
+      correlation_id: run-20260330-201
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_health_check
+        args:
+          base_url: "https://mofa.fm/api/"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_health_check
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-20-02
+      correlation_id: run-20260330-202
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_podcast_list
+        args:
+          page: 1
+          page_size: 10
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_podcast_list
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-20-03
+      correlation_id: run-20260330-203
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_trending
+        args:
+          source: "bilibili"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_trending
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-20-04
+      correlation_id: run-20260330-204
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_search
+        args:
+          keyword: "technology"
+          page: 1
+          page_size: 10
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_search
+        status: success
+      timeout: 30
+
+  - wait_for_test_trigger:
+      tc_id: TC-API-20-05
+      correlation_id: run-20260330-205
+      timeout: 30
+      poll_interval: 1.0
+
+  - expect_event:
+      event: tool_call
+      payload:
+        tool: fm_api_search_suggest
+        args:
+          keyword: "tech"
+      timeout: 30
+
+  - expect_event:
+      event: tool_result
+      payload:
+        tool: fm_api_search_suggest
+        status: success
+      timeout: 30
