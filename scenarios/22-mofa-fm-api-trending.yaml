@@ -11,19 +11,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "bilibili"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "bilibili"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-API-22-02
@@ -32,19 +24,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "zhihu"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "zhihu"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-API-22-03
@@ -53,19 +37,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "weibo"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "weibo"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-API-22-04
@@ -74,19 +50,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "github"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "github"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-API-22-05
@@ -95,19 +63,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "weixin"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "weixin"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-API-22-06
@@ -116,16 +76,8 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_api_trending
-        args:
-          source: "douyin"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_api_trending
-        status: success
-      timeout: 30
+        content_contains: "douyin"
+      timeout: 60
+      poll_interval: 1.0

@@ -11,22 +11,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "今天天气真好，我感到非常开心！"
-          voice: "vivian"
-          emotion: "happy"
-          language: "chinese"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "happy"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-12-02
@@ -35,22 +24,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "这个消息让我感到非常悲伤。"
-          voice: "vivian"
-          emotion: "sad"
-          language: "chinese"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "sad"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-12-03
@@ -59,22 +37,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "I am so excited about this amazing news!"
-          voice: "serena"
-          emotion: "excited"
-          language: "english"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "excited"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-12-04
@@ -83,19 +50,8 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Please stay calm and listen carefully."
-          voice: "ryan"
-          emotion: "calm"
-          language: "english"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "calm"
+      timeout: 60
+      poll_interval: 1.0

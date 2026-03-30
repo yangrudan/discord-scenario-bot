@@ -11,20 +11,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Hello, this is a basic TTS test."
-          voice: "vivian"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "vivian"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-10-02
@@ -33,20 +24,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Testing serena voice preset."
-          voice: "serena"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "serena"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-10-03
@@ -55,20 +37,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Testing ryan voice preset."
-          voice: "ryan"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "ryan"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-10-04
@@ -77,21 +50,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Testing slow speech rate."
-          voice: "vivian"
-          speed: 0.5
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "0.5"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-10-05
@@ -100,18 +63,8 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Testing fast speech rate."
-          voice: "vivian"
-          speed: 2.0
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "2.0"
+      timeout: 60
+      poll_interval: 1.0

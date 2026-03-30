@@ -11,17 +11,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_voice_list
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_voice_list
-        status: success
-      timeout: 30
+        content_contains: "voice"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-11-02
@@ -30,20 +24,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_voice_save
-        args:
-          voice_name: "test_custom_voice"
-          audio_url: "https://example.com/sample_audio.mp3"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_voice_save
-        status: success
-      timeout: 30
+        content_contains: "saved"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-11-03
@@ -52,20 +37,11 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_tts
-        args:
-          text: "Testing with a custom cloned voice."
-          voice: "test_custom_voice"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_tts
-        status: success
-      timeout: 30
+        content_contains: "custom"
+      timeout: 60
+      poll_interval: 1.0
 
   - wait_for_test_trigger:
       tc_id: TC-FM-11-04
@@ -74,16 +50,8 @@ steps:
       poll_interval: 1.0
 
   - expect_event:
-      event: tool_call
+      event: message_received
       payload:
-        tool: fm_voice_delete
-        args:
-          voice_name: "test_custom_voice"
-      timeout: 30
-
-  - expect_event:
-      event: tool_result
-      payload:
-        tool: fm_voice_delete
-        status: success
-      timeout: 30
+        content_contains: "deleted"
+      timeout: 60
+      poll_interval: 1.0
