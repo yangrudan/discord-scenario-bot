@@ -1,0 +1,30 @@
+name: "列举音色 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains: "音色"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: "vivian"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: "ryan"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: "eric"
+      timeout: 60
+      poll_interval: 1.0

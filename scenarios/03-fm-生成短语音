@@ -1,0 +1,18 @@
+name: "生成短语音 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains: "你好 2026"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: "已发送"
+      timeout: 60
+      poll_interval: 1.0
