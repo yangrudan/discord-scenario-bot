@@ -1,0 +1,11 @@
+test_case:
+  id: search_audio_by_exact_title
+  description: "按精确音频标题查找音频，返回匹配结果"
+  events:
+    - event: message_received
+      author: {id: 1001, name: "tester"}
+      channel: "DM"
+      content: "查找音频 "Eric 演示""
+  expected:
+    - bot_replies_with: "Eric 演示"
+    - result_count_gt: 0

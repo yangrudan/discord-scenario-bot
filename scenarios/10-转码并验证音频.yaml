@@ -1,0 +1,18 @@
+test_case:
+  id: transcode_and_verify_audio
+  description: "对音频进行转码（例如 mp3->aac）并验证输出文件可播放且时长合理"
+  events:
+    - event: message_received
+      author: {id: 2001, name: "owner"}
+      channel: "DM"
+      content: "转码音频 demo_track_01 为 aac"
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "✓ `transcode`"
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "已生成: demo_track_01.aac (时长: 00:01:23)"
+  expected:
+    - transcode_called: true
+    - output_playable: true
+    - duration_within_tolerance_sec: 5

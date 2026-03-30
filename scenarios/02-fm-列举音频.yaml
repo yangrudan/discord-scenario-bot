@@ -1,0 +1,10 @@
+test_case:
+  id: fm_list_audios
+  description: "列举可用音频资源（替换原先的音色列表场景）"
+  events:
+    - event: message_received
+      author: {id: 1001, name: "tester"}
+      channel: "DM"
+      content: "列出我的音频"
+  expected:
+    - bot_replies_with_contains: ["音频列表", "共", "页"]

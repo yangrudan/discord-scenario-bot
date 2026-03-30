@@ -1,0 +1,11 @@
+test_case:
+  id: delete_audio_permission_denied
+  description: "普通用户尝试删除受限音频，应收到权限拒绝信息"
+  events:
+    - event: message_received
+      author: {id: 2003, name: "normal_user"}
+      channel: "DM"
+      content: "删除音频 owner_only_track"
+  expected:
+    - bot_replies_with: "权限不足"
+    - operation_not_performed: true

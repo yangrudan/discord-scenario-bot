@@ -1,0 +1,185 @@
+# Generated E2E YAML test cases for Discord agent voice operations
+# Scenarios cover searching, deleting, renaming, cloning, pagination, permissions, failures, and concurrency.
+
+test_cases:
+  - id: search_voice_by_exact_name
+    description: "用户按精确音色名查找音色，返回匹配结果"
+    events:
+      - event: message_received
+        author: {id: 1001, name: "tester"}
+        channel: "DM"
+        content: "查找音色 Eric"
+    expected:
+      - bot_replies_with: "Eric"
+      - result_count_gt: 0
+
+  - id: search_voice_by_partial_name
+    description: "用户按部分名称查找，应返回包含该片段的所有音色"
+    events:
+      - event: message_received
+        author: {id: 1002, name: "tester"}
+        channel: "DM"
+        content: "查找音色 er"
+    expected:
+      - bot_replies_with_contains: ["er", "Eric", "serena"]
+
+  - id: delete_voice_success
+    description: "具有权限的用户删除存在的自定义音色，机器人确认删除"
+    events:
+      - event: message_received
+        author: {id: 2001, name: "owner"}
+        channel: "DM"
+        content: "删除音色 test_clone"
+      - event: message_edit
+        author: {id: 3001, name: "agent"}
+        after: "✓ `delete_voice`"
+      - event: message_edit
+        author: {id: 3001, name: "agent"}
+        after: "已删除音色: test_clone"
+    expected:
+      - delete_api_called: true
+      - final_message_contains: "已删除音色"
+
+  - id: delete_voice_nonexistent
+    description: "删除不存在的音色时，机器人返回错误提示"
+    events:
+      - event: message_received
+        author: {id: 2002, name: "tester"}
+        channel: "DM"
+        content: "删除音色 not_exist"
+    expected:
+      - bot_replies_with: "未找到音色"
+      - error_code: 404
+
+  - id: delete_voice_permission_denied
+    description: "普通用户尝试删除受限音色，应收到权限拒绝信息"
+    events:
+      - event: message_received
+        author: {id: 2003, name: "normal_user"}
+        channel: "DM"
+        content: "删除音色 douwt"
+    expected:
+      - bot_replies_with: "权限不足"
+      - operation_not_performed: true
+
+  - id: rename_voice
+    description: "重命名音色后，旧名不可用，新名可用"
+    events:
+      - event: message_received
+        author: {id: 2001, name: "owner"}
+        content: "重命名音色 douwt -> douwt_v2"
+      - event: message_edit
+        author: {id: 3001}
+        after: "已将 douwt 重命名为 douwt_v2"
+    expected:
+      - new_name_search_returns: true
+      - old_name_search_returns: false
+
+  - id: clone_voice_and_verify
+    description: "克隆一个音色并验证克隆条目出现在列表中"
+    events:
+      - event: message_received
+        author: {id: 2001, name: "owner"}
+        content: "克隆音色 Eric 为 eric_copy"
+      - event: message_edit
+        author: {id: 3001}
+        after: "✓ `clone_voice`"
+      - event: message_edit
+        author: {id: 3001}
+        after: "已创建克隆音色: eric_copy"
+    expected:
+      - clone_created: true
+      - list_contains: "eric_copy"
+
+  - id: bulk_delete_voices
+    description: "批量删除多个自定义音色，全部删除成功或部分失败需报告"
+    events:
+      - event: message_received
+        author: {id: 2001, name: "owner"}
+        content: "批量删除音色: test1,test2,test3"
+      - event: message_edit
+        author: {id: 3001}
+        after: "开始批量删除 3 个音色..."
+      - event: message_edit
+        author: {id: 3001}
+        after: "已删除: test1, test2。失败: test3 (未找到)"
+    expected:
+      - deleted_count: 2
+      - failed_items: ["test3"]
+
+  - id: tts_with_missing_voice
+    description: "请求使用不存在的音色进行 TTS，应返回提示并不尝试合成"
+    events:
+      - event: message_received
+        author: {id: 1003, name: "tester"}
+        content: "生成语音: 内容=hello, 音色=ghost_voice"
+    expected:
+      - bot_replies_with: "未找到音色"
+      - fm_tts_not_invoked: true
+
+  - id: tts_retry_on_transient_failure
+    description: "TTS 服务暂时失败时，机器人重试 N 次后成功或最终报错"
+    events:
+      - event: message_received
+        author: {id: 1004, name: "tester"}
+        content: "用 Eric 合成: 这是一次重试测试"
+      - event: message_edit
+        author: {id: 3001}
+        after: "✓ `fm_tts` (attempt 1 failed, retrying)"
+      - event: message_edit
+        author: {id: 3001}
+        after: "✓ `fm_tts` (attempt 2 succeeded)"
+    expected:
+      - retry_attempts: 2
+      - final_state: "succeeded"
+
+  - id: list_voices_pagination
+    description: "当音色数量较多时，列表应支持分页或分段发送"
+    events:
+      - event: message_received
+        author: {id: 1005, name: "tester"}
+        content: "列出所有音色"
+      - event: message_edit
+        author: {id: 3001}
+        after: "以下为第 1/3 页音色..."
+      - event: message_edit
+        author: {id: 3001}
+        after: "以下为第 2/3 页音色..."
+    expected:
+      - pagination_used: true
+      - pages_gt: 1
+
+  - id: concurrent_tts_requests
+    description: "多个用户同时请求 TTS，系统应并发处理或排队，结果不互相混淆"
+    events:
+      - event: message_received
+        author: {id: 1101, name: "u1"}
+        content: "用 Eric 合成: A"
+      - event: message_received
+        author: {id: 1102, name: "u2"}
+        content: "用 vivian 合成: B"
+      - event: message_edit
+        author: {id: 3001}
+        after: "已生成: A (for u1)"
+      - event: message_edit
+        author: {id: 3001}
+        after: "已生成: B (for u2)"
+    expected:
+      - both_requests_succeeded: true
+      - no_cross_talk_between_results: true
+
+  - id: send_file_failure_handling
+    description: "文件上传失败时，机器人应通知用户并提供重试或备用链接"
+    events:
+      - event: message_received
+        author: {id: 1006, name: "tester"}
+        content: "合成并发送音频，用 Eric: 失败测试"
+      - event: message_edit
+        author: {id: 3001}
+        after: "尝试发送文件..."
+      - event: message_edit
+        author: {id: 3001}
+        after: "⚠️ 文件发送失败: CDN 错误。请稍后重试或使用备用链接"
+    expected:
+      - send_file_attempted: true
+      - bot_provides_retry_instruction: true

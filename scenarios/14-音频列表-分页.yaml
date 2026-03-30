@@ -1,0 +1,17 @@
+test_case:
+  id: list_audios_pagination
+  description: "当音频数量较多时，列表应支持分页或分段发送"
+  events:
+    - event: message_received
+      author: {id: 1005, name: "tester"}
+      channel: "DM"
+      content: "列出所有音频"
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "以下为第 1/3 页音频..."
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "以下为第 2/3 页音频..."
+  expected:
+    - pagination_used: true
+    - pages_gt: 1

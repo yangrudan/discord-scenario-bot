@@ -1,0 +1,11 @@
+test_case:
+  id: audio_generation_with_missing_source
+  description: "请求使用不存在或缺失的源文件进行音频处理，应返回提示并不执行处理"
+  events:
+    - event: message_received
+      author: {id: 1003, name: "tester"}
+      channel: "DM"
+      content: "处理音频: source=missing.wav, 操作=normalize"
+  expected:
+    - bot_replies_with: "未找到源音频"
+    - processing_not_invoked: true

@@ -1,0 +1,21 @@
+test_case:
+  id: concurrent_tts_requests
+  description: "多个用户同时请求 TTS，系统应并发处理或排队，结果不互相混淆"
+  events:
+    - event: message_received
+      author: {id: 1101, name: "u1"}
+      channel: "DM"
+      content: "用 Eric 合成: A"
+    - event: message_received
+      author: {id: 1102, name: "u2"}
+      channel: "DM"
+      content: "用 vivian 合成: B"
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "已生成: A (for u1)"
+    - event: message_edit
+      author: {id: 3001, name: "agent"}
+      after: "已生成: B (for u2)"
+  expected:
+    - both_requests_succeeded: true
+    - no_cross_talk_between_results: true
