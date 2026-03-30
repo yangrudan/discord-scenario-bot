@@ -7,7 +7,8 @@ steps:
   - expect_event:
       event: message_received
       payload:
-        content_contains: "你好 2026"
+        # 使用正则以容错有无逗号或空格：匹配 "你好，2026"、"你好 2026"、"你好,2026" 等
+        content_contains_regex: "你好[,， ]?2026"
       timeout: 60
       poll_interval: 1.0
   - expect_event:

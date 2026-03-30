@@ -20,6 +20,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 import yaml
+import re
 
 from e2e_log import iter_log_json_lines, find_test_trigger
 
@@ -45,6 +46,13 @@ def find_event(path: str, event_type: str, payload_pattern: Dict[str, Any]):
                 base = k[: -len("_contains")]
                 val = get_nested(payload, base)
                 if val is None or str(v) not in str(val):
+                    ok = False
+                    break
+            elif k.endswith("_contains_regex"):
+                # value is a regex pattern to search inside the payload field
+                base = k[: -len("_contains_regex")]
+                val = get_nested(payload, base)
+                if val is None or re.search(str(v), str(val)) is None:
                     ok = False
                     break
             else:
