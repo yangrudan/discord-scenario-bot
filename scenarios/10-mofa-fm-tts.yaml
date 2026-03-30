@@ -4,23 +4,11 @@ defaults:
   max_wait: 60
 
 steps:
-  - wait_for_test_trigger:
-      tc_id: TC-FM-10-01
-      correlation_id: run-20260330-101
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
         content_contains: "vivian"
       timeout: 60
-      poll_interval: 1.0
-
-  - wait_for_test_trigger:
-      tc_id: TC-FM-10-02
-      correlation_id: run-20260330-102
-      timeout: 30
       poll_interval: 1.0
 
   - expect_event:
@@ -30,12 +18,6 @@ steps:
       timeout: 60
       poll_interval: 1.0
 
-  - wait_for_test_trigger:
-      tc_id: TC-FM-10-03
-      correlation_id: run-20260330-103
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
@@ -43,23 +25,11 @@ steps:
       timeout: 60
       poll_interval: 1.0
 
-  - wait_for_test_trigger:
-      tc_id: TC-FM-10-04
-      correlation_id: run-20260330-104
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
         content_contains: "0.5"
       timeout: 60
-      poll_interval: 1.0
-
-  - wait_for_test_trigger:
-      tc_id: TC-FM-10-05
-      correlation_id: run-20260330-105
-      timeout: 30
       poll_interval: 1.0
 
   - expect_event:

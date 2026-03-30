@@ -4,23 +4,11 @@ defaults:
   max_wait: 60
 
 steps:
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-01
-      correlation_id: run-20260330-221
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
         content_contains: "bilibili"
       timeout: 60
-      poll_interval: 1.0
-
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-02
-      correlation_id: run-20260330-222
-      timeout: 30
       poll_interval: 1.0
 
   - expect_event:
@@ -30,23 +18,11 @@ steps:
       timeout: 60
       poll_interval: 1.0
 
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-03
-      correlation_id: run-20260330-223
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
         content_contains: "weibo"
       timeout: 60
-      poll_interval: 1.0
-
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-04
-      correlation_id: run-20260330-224
-      timeout: 30
       poll_interval: 1.0
 
   - expect_event:
@@ -56,23 +32,11 @@ steps:
       timeout: 60
       poll_interval: 1.0
 
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-05
-      correlation_id: run-20260330-225
-      timeout: 30
-      poll_interval: 1.0
-
   - expect_event:
       event: message_received
       payload:
         content_contains: "weixin"
       timeout: 60
-      poll_interval: 1.0
-
-  - wait_for_test_trigger:
-      tc_id: TC-API-22-06
-      correlation_id: run-20260330-226
-      timeout: 30
       poll_interval: 1.0
 
   - expect_event:
