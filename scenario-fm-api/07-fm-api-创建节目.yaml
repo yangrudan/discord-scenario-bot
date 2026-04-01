@@ -1,0 +1,10 @@
+test_case:
+  id: fm_create_show
+  description: "创建节目 - 验证创建节目需要认证并返回 201"
+  events:
+    - event: message_received
+      author: {id: 1005, name: "tester"}
+      channel: "DM"
+      content: "创建节目的标题: 测试节目 描述: 这是一个测试"
+  expected:
+    - bot_replies_with_contains: ["创建成功", "201", "slug"]

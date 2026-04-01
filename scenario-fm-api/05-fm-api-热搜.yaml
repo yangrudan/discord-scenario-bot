@@ -1,0 +1,10 @@
+test_case:
+  id: fm_trending_bilibili
+  description: "获取 B 站热搜并检查返回数据结构"
+  events:
+    - event: message_received
+      author: {id: 1003, name: "tester"}
+      channel: "DM"
+      content: "给我看 B 站热搜"
+  expected:
+    - bot_replies_with_contains: ["热搜", "B站", "条"]

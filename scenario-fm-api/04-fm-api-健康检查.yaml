@@ -1,0 +1,10 @@
+test_case:
+  id: fm_health_check
+  description: "健康检查 - 验证 /health/ 返回服务状态"
+  events:
+    - event: message_received
+      author: {id: 1002, name: "tester"}
+      channel: "DM"
+      content: "服务健康吗"
+  expected:
+    - bot_replies_with_contains: ["服务运行", "healthy", "数据库"]

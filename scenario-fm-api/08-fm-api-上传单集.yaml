@@ -1,0 +1,10 @@
+test_case:
+  id: fm_upload_episode
+  description: "上传单集 - 验证文件上传限制及返回 audio_url"
+  events:
+    - event: message_received
+      author: {id: 1006, name: "tester"}
+      channel: "DM"
+      content: "上传音频 文件: sample.mp3 大小: 1024KB"
+  expected:
+    - bot_replies_with_contains: ["上传成功", "audio_url", "100KB"]

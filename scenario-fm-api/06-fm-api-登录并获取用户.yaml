@@ -1,0 +1,10 @@
+test_case:
+  id: fm_auth_login
+  description: "登录流程 - 使用用户名/密码获取 token 并返回用户信息"
+  events:
+    - event: message_received
+      author: {id: 1004, name: "tester"}
+      channel: "DM"
+      content: "我想登录 用户:demo 密码:demo123"
+  expected:
+    - bot_replies_with_contains: ["登录成功", "Token", "用户名"]

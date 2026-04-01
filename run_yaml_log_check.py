@@ -45,16 +45,39 @@ def find_event(path: str, event_type: str, payload_pattern: Dict[str, Any]):
             if k.endswith("_contains"):
                 base = k[: -len("_contains")]
                 val = get_nested(payload, base)
-                if val is None or str(v) not in str(val):
+                if val is None:
                     ok = False
                     break
+                # allow list of required substrings or a single substring
+                if isinstance(v, list):
+                    for item in v:
+                        if str(item) not in str(val):
+                            ok = False
+                            break
+                    if not ok:
+                        break
+                else:
+                    if str(v) not in str(val):
+                        ok = False
+                        break
             elif k.endswith("_contains_regex"):
-                # value is a regex pattern to search inside the payload field
+                # value is a regex pattern (or list of patterns) to search inside the payload field
                 base = k[: -len("_contains_regex")]
                 val = get_nested(payload, base)
-                if val is None or re.search(str(v), str(val)) is None:
+                if val is None:
                     ok = False
                     break
+                if isinstance(v, list):
+                    for pat in v:
+                        if re.search(str(pat), str(val)) is None:
+                            ok = False
+                            break
+                    if not ok:
+                        break
+                else:
+                    if re.search(str(v), str(val)) is None:
+                        ok = False
+                        break
             else:
                 val = get_nested(payload, k)
                 if val != v:
