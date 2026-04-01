@@ -1,0 +1,18 @@
+name: "缺失的音色生成音频 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 5
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "许嵩的声音"
+      timeout: 5
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["克隆"]
+      timeout: 5
+      poll_interval: 1.0

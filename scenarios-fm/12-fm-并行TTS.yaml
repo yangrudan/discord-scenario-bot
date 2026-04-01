@@ -1,4 +1,4 @@
-name: "音频时长 Test"
+name: "并发 Test"
 defaults:
   settle_timeout: 5
   max_wait: 5
@@ -7,12 +7,12 @@ steps:
   - expect_event:
       event: message_received
       payload:
-        content_contains_regex: "可以生成不被分割的音频最长的时长 "
+        content_contains_regex: "生成一个100字的音频，内容任意"
       timeout: 5
       poll_interval: 1.0
   - expect_event:
       event: message_edit
       payload:
-        after_contains: ["200字"]
+        after_contains: ["音频已生成","音频已生成"]
       timeout: 5
       poll_interval: 1.0
