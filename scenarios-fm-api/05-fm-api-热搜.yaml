@@ -1,10 +1,18 @@
-test_case:
-  id: fm_trending_bilibili
-  description: "获取 B 站热搜并检查返回数据结构"
-  events:
-    - event: message_received
-      author: {id: 1003, name: "tester"}
-      channel: "DM"
-      content: "给我看 B 站热搜"
-  expected:
-    - bot_replies_with_contains: ["热搜", "B站", "条"]
+name: "fm-api 热搜 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 5
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content: "给我看 B 站热搜"
+      timeout: 5
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["热搜", "B站", "条"]
+      timeout: 5
+      poll_interval: 1.0

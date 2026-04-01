@@ -1,10 +1,18 @@
-test_case:
-  id: fm_upload_episode
-  description: "上传单集 - 验证文件上传限制及返回 audio_url"
-  events:
-    - event: message_received
-      author: {id: 1006, name: "tester"}
-      channel: "DM"
-      content: "上传音频 文件: sample.mp3 大小: 1024KB"
-  expected:
-    - bot_replies_with_contains: ["上传成功", "audio_url", "100KB"]
+name: "fm-api 上传单集 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 5
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content: "上传音频 文件: sample.mp3 大小: 1024KB"
+      timeout: 5
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["上传成功", "audio_url", "100KB"]
+      timeout: 5
+      poll_interval: 1.0
