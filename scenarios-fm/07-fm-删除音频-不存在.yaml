@@ -1,0 +1,19 @@
+name: "删除音频（不存在） Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 5
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        # 匹配 '删除douwt_test.wav' 或 '删除 douwt.wav'：允许可选空格与任意文件名，末尾不应强制空格
+        content_contains_regex: "删除\\s*\\S*\\.wav"
+      timeout: 5
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["不在目录"]
+      timeout: 5
+      poll_interval: 1.0

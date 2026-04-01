@@ -7,8 +7,8 @@ steps:
   - expect_event:
       event: message_received
       payload:
-        # 使用正则以容错有无逗号或空格：匹配 "你好，2026"、"你好 2026"、"你好,2026" 等
-        content_contains_regex: "给我*.wav "
+        # 匹配 '给我douwt_test.wav' 或 '给我 douwt.wav'：允许可选空格与任意非空白文件名，\.wav 需转义
+        content_contains_regex: "给我\\s*\\S*\\.wav"
       timeout: 5
       poll_interval: 1.0
   - expect_event:
