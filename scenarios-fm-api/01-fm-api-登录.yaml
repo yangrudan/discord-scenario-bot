@@ -1,0 +1,18 @@
+name: "fm-api 登录 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains: "登录"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["登录成功", "Token"]
+      timeout: 60
+      poll_interval: 1.0

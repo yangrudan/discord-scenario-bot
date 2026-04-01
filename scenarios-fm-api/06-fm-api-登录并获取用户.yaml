@@ -1,0 +1,18 @@
+name: "fm-api 登录并获取用户 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content: "我想登录 用户:demo 密码:demo123"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["登录成功", "Token", "用户名"]
+      timeout: 60
+      poll_interval: 1.0

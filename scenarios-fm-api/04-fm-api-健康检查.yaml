@@ -1,0 +1,18 @@
+name: "fm-api 健康检查 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 5
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content: "服务健康吗"
+      timeout: 5
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["服务运行", "healthy", "数据库"]
+      timeout: 5
+      poll_interval: 1.0
