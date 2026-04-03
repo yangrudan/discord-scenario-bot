@@ -1,0 +1,21 @@
+name: "上下文场景-模型切换澄清 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 30
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content: "你说的卸载只是不加载，还是删除？"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains:
+          - "只是**不加载**"
+          - "不是删除文件"
+          - "API 切换"
+      timeout: 30
+      poll_interval: 1.0

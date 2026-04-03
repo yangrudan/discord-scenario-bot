@@ -66,5 +66,12 @@ python octos_log.py
 
 新开启一个终端
 ```bash
-python3 run_yaml_log_check.py scenarios/01-hello.yaml --log-file ./bot_events.log
+python3 run_yaml_log_check.py scenarios-fm/01-hello.yaml --log-file ./bot_events.log
+```
+
+也可以运行新增的混合场景与上下文场景 YAML：
+
+```bash
+python3 run_yaml_log_check.py scenarios-fm-mixed/01-fm-混合-生成后上传单集.yaml --log-file ./bot_events.log
+python3 run_yaml_log_check.py scenarios-fm-context/01-fm-上下文-删除确认并完成.yaml --log-file ./bot_events.log
 ```

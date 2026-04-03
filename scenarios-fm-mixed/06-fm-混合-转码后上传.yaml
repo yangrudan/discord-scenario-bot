@@ -1,0 +1,30 @@
+name: "混合场景-转码后上传 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 30
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "aac"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["aac"]
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "上传音频 文件:\\s*\\S+\\.aac\\s*大小:\\s*\\d+KB"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["上传成功", "audio_url"]
+      timeout: 30
+      poll_interval: 1.0

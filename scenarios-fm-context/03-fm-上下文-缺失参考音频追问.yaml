@@ -1,0 +1,21 @@
+name: "上下文场景-缺失参考音频追问 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 30
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "给我\\s*douwt_ref\\.wav"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains:
+          - "没找到 `douwt_ref.wav`"
+          - "克隆 **douwt** 音色"
+          - "重新发给我"
+      timeout: 30
+      poll_interval: 1.0

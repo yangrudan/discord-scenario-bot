@@ -1,0 +1,24 @@
+name: "上下文场景-删除确认并完成 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 30
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "删除\\s*douwt_test\\.wav"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["确认删除", "douwt_test.wav"]
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["已删除", "douwt_test.wav"]
+      timeout: 30
+      poll_interval: 1.0

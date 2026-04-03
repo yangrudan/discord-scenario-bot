@@ -1,0 +1,24 @@
+name: "上下文场景-删除不存在文件 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 30
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "删除\\s*yrd\\.wav"
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["确认删除", "yrd.wav"]
+      timeout: 30
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["不在目录", "不用管它"]
+      timeout: 30
+      poll_interval: 1.0

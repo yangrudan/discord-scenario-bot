@@ -1,0 +1,42 @@
+name: "混合场景-登录后上传生成音频 Test"
+defaults:
+  settle_timeout: 5
+  max_wait: 60
+
+steps:
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "生成一个100字的音频，内容任意"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["音频已生成", "已发送"]
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_received
+      payload:
+        content: "我想登录 用户:demo 密码:demo123"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["登录成功", "Token", "用户名"]
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_received
+      payload:
+        content_contains_regex: "上传音频 文件:\\s*\\S+\\.wav\\s*大小:\\s*\\d+KB"
+      timeout: 60
+      poll_interval: 1.0
+  - expect_event:
+      event: message_edit
+      payload:
+        after_contains: ["上传成功", "audio_url"]
+      timeout: 60
+      poll_interval: 1.0
