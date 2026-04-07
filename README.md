@@ -75,3 +75,10 @@ python3 run_yaml_log_check.py scenarios-fm/01-hello.yaml --log-file ./bot_events
 python3 run_yaml_log_check.py scenarios-fm-mixed/01-fm-混合-生成后上传单集.yaml --log-file ./bot_events.log
 python3 run_yaml_log_check.py scenarios-fm-context/01-fm-上下文-删除确认并完成.yaml --log-file ./bot_events.log
 ```
+
+如果你想一次性运行一个目录下的多个 YAML 并生成聚合报告（JSON/HTML），可以使用新增的脚本：
+
+```bash
+# 运行 scenarios-fm-mixed 下所有 .yaml，并输出 JSON 与 HTML 报告
+python3 run_all_and_report.py scenarios-fm-mixed --log-file ./bot_events.log --report ./report.json --html-report ./report.html
+```

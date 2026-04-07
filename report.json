@@ -1,0 +1,93 @@
+{
+  "tests": [
+    {
+      "scenario": "scenarios-fm/01-hello.yaml",
+      "name": "Hello World Test",
+      "rc": 0,
+      "duration": 0.0004811286926269531,
+      "output": "Scenario: Hello World Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains': 'hello'}, 'timeout': 60, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains': 'hello'}\nStep 1 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/02-fm-列举音频.yaml",
+      "name": "fm_list_audios Test",
+      "rc": 0,
+      "duration": 0.002933025360107422,
+      "output": "Scenario: fm_list_audios Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content': '列举可用音色'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content': '列举可用音色'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['音色', 'eric', 'sohee']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['音色', 'eric', 'sohee']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/03-fm-生成短语音.yaml",
+      "name": "生成短语音 Test",
+      "rc": 0,
+      "duration": 0.0014569759368896484,
+      "output": "Scenario: 生成短语音 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '你好[,， ]?2026'}, 'timeout': 60, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '你好[,， ]?2026'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': '已发送'}, 'timeout': 60, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': '已发送'}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/04-fm-搜索本地音频.yaml",
+      "name": "查找本地语音 Test",
+      "rc": 0,
+      "duration": 0.005131959915161133,
+      "output": "Scenario: 查找本地语音 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '看看已经生成的语音'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '看看已经生成的语音'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['文件名', 'wav']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['文件名', 'wav']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/05-fm-挑选音频.yaml",
+      "name": "挑选音频 Test",
+      "rc": 0,
+      "duration": 0.004015207290649414,
+      "output": "Scenario: 挑选音频 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '给我\\\\s*\\\\S*\\\\.wav'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '给我\\\\s*\\\\S*\\\\.wav'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['已发送', 'Discord']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['已发送', 'Discord']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/06-fm-删除音频-成功.yaml",
+      "name": "删除音频 Test",
+      "rc": 0,
+      "duration": 0.0062520503997802734,
+      "output": "Scenario: 删除音频 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '删除\\\\s*`?~?/?\\\\S*\\\\.wav`?'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '删除\\\\s*`?~?/?\\\\S*\\\\.wav`?'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['确认删除']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['确认删除']}\nStep 2 OK\nStep 3: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['已删除']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['已删除']}\nStep 3 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/07-fm-删除音频-不存在.yaml",
+      "name": "删除音频（不存在） Test",
+      "rc": 0,
+      "duration": 0.004945278167724609,
+      "output": "Scenario: 删除音频（不存在） Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '删除\\\\s*\\\\S*\\\\.wav'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '删除\\\\s*\\\\S*\\\\.wav'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['不在目录']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['不在目录']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/08-fm-音频-最长时长.yaml",
+      "name": "音频时长 Test",
+      "rc": 0,
+      "duration": 0.004822969436645508,
+      "output": "Scenario: 音频时长 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '可以生成不被分割的音频最长的时长\\\\s*'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '可以生成不被分割的音频最长的时长\\\\s*'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains_regex': '200\\\\s*-?\\\\s*300\\\\s*字|200\\\\s*字'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains_regex': '200\\\\s*-?\\\\s*300\\\\s*字|200\\\\s*字'}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/09-fm-重命名音频.yaml",
+      "name": "重命名音频 Test",
+      "rc": 0,
+      "duration": 0.0057830810546875,
+      "output": "Scenario: 重命名音频 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '重命名\\\\s*\\\\S*\\\\.wav'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '重命名\\\\s*\\\\S*\\\\.wav'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['已重命名']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['已重命名']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/10-fm-转码并验证音频.yaml",
+      "name": "转码音频 Test",
+      "rc": 0,
+      "duration": 0.006161928176879883,
+      "output": "Scenario: 转码音频 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': 'aac'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': 'aac'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['aac']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['aac']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/11-fm-缺失音频-生成失败.yaml",
+      "name": "缺失的音色生成音频 Test",
+      "rc": 0,
+      "duration": 0.006149768829345703,
+      "output": "Scenario: 缺失的音色生成音频 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '许嵩的声音'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '许嵩的声音'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['克隆']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['克隆']}\nStep 2 OK\n"
+    },
+    {
+      "scenario": "scenarios-fm/12-fm-并行TTS.yaml",
+      "name": "并发 Test",
+      "rc": 0,
+      "duration": 0.00899195671081543,
+      "output": "Scenario: 并发 Test\nUsing log file: ./bot_events.log\nStep 1: {'expect_event': {'event': 'message_received', 'payload': {'content_contains_regex': '生成一个100字的音频，内容任意'}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_received' matching payload {'content_contains_regex': '生成一个100字的音频，内容任意'}\nStep 1 OK\nStep 2: {'expect_event': {'event': 'message_edit', 'payload': {'after_contains': ['音频已生成', '音频已生成']}, 'timeout': 5, 'poll_interval': 1.0}}\nFound event 'message_edit' matching payload {'after_contains': ['音频已生成', '音频已生成']}\nStep 2 OK\n"
+    }
+  ],
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}
